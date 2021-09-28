@@ -32,25 +32,42 @@ describe('Automate Flow', () => {
                         cy.get(mainPageXpath.openValue).invoke('text').then((ValueOpen) => {
                             const valueOFOpen = ValueOpen;
                             console.log(valueOFOpen);
-                        
                         });  
-
                     }    
                     //Capture the value of Market Cap 
-                    cy.xpath(mainPageXpath.marketLabel).invoke('text').then((marketLabel) => {
-                        const openElemVisible = expect(marketLabel.trim()).equal('Market Cap');
-                        if(openElemVisible) {
+                    cy.get(mainPageXpath.marketLabel).invoke('text').then((marketLabel) => {
+                            expect(marketLabel.trim()).equal('Market Cap');
                             cy.get(mainPageXpath.marketValue).invoke('text').then((ValueMarket) => {
                                 const valueOFOpen = ValueMarket;
                                 console.log(valueOFOpen);
-                            
-                            });  
-                        };
-                    });  
-                //Capture the value of Market Cap 
-                });    
-            }
+                                //Assert the Company Name and Symbol
+                                cy.get(mainPageXpath.companyName).invoke('text').then((compName) => {
+                                    const marketElemVisible = expect(compName.trim()).equal('OTCM');
+                                    //Navigate to “Security Details” tab
+                                    cy.get(mainPageXpath.securityTab).click();    
 
+                                    //Assert Market Cap on Quote Page matches with Security Detail Page
+                                    cy.get(mainPageXpath.marketLabelSecy).invoke('text').then((marketLabelSec) => {
+                                        expect(marketLabelSec.trim()).equal('Market Cap');
+                                        cy.get(mainPageXpath.marketValueSec).invoke('text').then((marketValueSec) => {
+                                            expect(marketValueSec.trim()).equal(valueOFOpen);
+                                            //Print log “Market Cap $x on $date”
+                                            cy.get(mainPageXpath.dateSec).invoke('text').then((date) => {
+                                                //Print log “Market Cap $x on $date”
+                                                console.log('Martket Cap' + marketValueSec + " " + 'on' + " " + date);
+                                            }); 
+            
+                                        }); 
+
+                                     }); 
+                            
+                                 });
+
+                            });  
+                     });    
+                 }); 
+            }
+        });
     });
 });
-});
+
