@@ -1,4 +1,3 @@
-
 import * as mainPageXpath from '../support/xpath';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -17,10 +16,10 @@ describe('Automate Flow', () => {
         cy.viewport(1440, 900);
         cy.wait(3000);
         //Search for OTCM
-        cy.get(mainPageXpath.searchInput).type('OTCM');
+        cy.get(mainPageXpath.searchInput).type('RHHBY');
         //Verify listed result
         cy.get(mainPageXpath.listedResult).invoke('text').then((text) => {
-            const elemVisible = expect(text.trim()).equal('OTCM - OTC Markets Group Inc.')
+            const elemVisible = expect(text.trim()).equal('RHHBY - Roche Holding Ltd')
             if(elemVisible){
                 cy.get(mainPageXpath.listedResult).click();
                 cy.wait(3000);
@@ -42,7 +41,7 @@ describe('Automate Flow', () => {
                                 console.log(valueOFOpen);
                                 //Assert the Company Name and Symbol
                                 cy.get(mainPageXpath.companyName).invoke('text').then((compName) => {
-                                    const marketElemVisible = expect(compName.trim()).equal('OTCM');
+                                    const marketElemVisible = expect(compName.trim()).equal('RHHBY');
                                     //Navigate to “Security Details” tab
                                     cy.get(mainPageXpath.securityTab).click();    
 
@@ -70,4 +69,3 @@ describe('Automate Flow', () => {
         });
     });
 });
-
